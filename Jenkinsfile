@@ -22,7 +22,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'dokerhub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh 'docker build -t aminemighri/demo-java-ops:2.0 .'
                         sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh 'docker push aminemighri/demo-java-Ops:2.0'
+                        sh 'docker push aminemighri/demo-java-ops:2.0'
                     }
                 }
             }
