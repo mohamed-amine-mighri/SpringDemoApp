@@ -1,0 +1,38 @@
+# Deployment YAML for Java Spring app
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springapp-deployment
+  labels:
+    app: springapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springapp
+  template:
+    metadata:
+      labels:
+        app: springapp
+    spec:
+      containers:
+        - name: springapp-container
+          image: aminemighri/demo-java-ops:2.0
+          ports:
+            - containerPort: 8080  # Assuming your Spring app runs on port 8080
+---
+
+# Service YAML for Java Spring app
+apiVersion: v1
+kind: Service
+metadata:
+  name: springapp-service
+spec:
+  selector:
+    app: springapp
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 5000  # External port exposed by the service
+      targetPort: 8080  # Port on which the Spring app is running inside the container
+      nodePort: 31111  # Node port (optional, use only if needed)
