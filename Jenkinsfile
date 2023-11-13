@@ -8,7 +8,7 @@ pipeline {
         KUBECONFIG = credentials('finleKuberConfig')
         APP_NAME = 'springapp'
         IMAGE_NAME = 'aminemighri/demo-java-ops:2.0'
-        NAMESPACE = 'default'
+        NAMESPACE = 'deploymentservice.yml'
     }
 
     stages {
@@ -64,7 +64,7 @@ pipeline {
             steps {
                 script {
                     // Configure kubectl with the provided kubeconfig
-                    withKubeConfig([credentialsId: 'your-kubeconfig-credential-id']) {
+                    withKubeConfig([credentialsId: 'finleKuberConfig']) {
                         // Deploy the Java Spring app
                         sh """
                             kubectl apply -f deployment.yaml -n $NAMESPACE
