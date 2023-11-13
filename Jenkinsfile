@@ -54,12 +54,17 @@ pipeline {
         }
 
 
-            stage('Deploying App to Kubernetes') {
-               steps {
-                 script {
-                   kubernetesDeploy("worked")
-                 }
-               }
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'finleKuberConfig', variable: 'KUBE_CONFIG')]) {
+                        sh """
+                            kubectl --kubeconfig=\$KUBE_CONFIG \
+                                --namespace=${KUBE_NAMESPACE} \
+                                apply -f deploymentservice.yml
+                        """
+                    }
+                }
             }
     }
 }
