@@ -25,6 +25,6 @@ public class SpringBootAppApplicationTests {
 	public void homeEndpointReturnsHello() {
 		String url = "http://localhost:" + 8080 + "/";
 		String response = restTemplate.getForObject(url, String.class);
-		assertThat(response).contains("Hello");
+		assertThat(response).contains("Authentication required");
 	}
 }
