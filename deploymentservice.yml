@@ -33,6 +33,6 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 5000  # External port exposed by the service
+      port: 80  # External port exposed by the service
       targetPort: 8080  # Port on which the Spring app is running inside the container
       nodePort: 31111  # Node port (optional, use only if needed)

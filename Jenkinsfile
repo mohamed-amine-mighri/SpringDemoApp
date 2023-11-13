@@ -3,7 +3,12 @@ pipeline {
 
     tools {
         maven 'Maven'
-        kubernetes 'Kubernetes'
+    }
+    environment {
+        KUBECONFIG = credentials('finleKuberConfig')
+        APP_NAME = 'springapp'
+        IMAGE_NAME = 'aminemighri/demo-java-ops:2.0'
+        NAMESPACE = 'deploymentservice.yml'
     }
 
     stages {
@@ -54,14 +59,20 @@ pipeline {
             }
         }
 
-        stages {
-            stage('Deploying App to Kubernetes') {
-               steps {
-                 script {
-                   kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "finleKuberConfig")
-                 }
-               }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    // Configure kubectl with the provided kubeconfig
+                    withKubeConfig([credentialsId: 'finleKuberConfig']) {
+                        // Deploy the Java Spring app
+                        sh """
+                            minikube kubectl -- apply -f deploymentservice.yml
+                        """
+                    }
+                }
             }
-        } 
+    
+        }
     }
 }
