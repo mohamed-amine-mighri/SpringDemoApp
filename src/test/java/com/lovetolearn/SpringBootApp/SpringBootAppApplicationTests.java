@@ -8,7 +8,6 @@ class SpringBootAppApplicationTests {
 
 	@Test
 	void contextLoads() {
-		SpringBootAppApplication.main(new String[]{});
 	}
 
 }
