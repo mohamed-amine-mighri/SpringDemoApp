@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         maven 'Maven'
+        kubernetes 'Kubernetes'
     }
 
     stages {
@@ -51,10 +52,6 @@ pipeline {
                     }
                 }
             }
-        }
-
-        tools {
-            kubernetes 'Kubernetes'
         }
 
         stages {
