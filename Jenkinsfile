@@ -67,8 +67,7 @@ pipeline {
                     withKubeConfig([credentialsId: 'finleKuberConfig']) {
                         // Deploy the Java Spring app
                         sh """
-                            minikube kubectl apply -f deployment.yaml -n $NAMESPACE
-                            minikube kubectl apply -f service.yaml -n $NAMESPACE
+                            minikube kubectl apply -f deployment.yaml -n deploymentservice.yml
                         """
                     }
                 }
