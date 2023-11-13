@@ -14,16 +14,19 @@ public class SpringBootAppApplicationTests {
 
 	private final TestRestTemplate restTemplate = new TestRestTemplate();
 
+	@LocalServerPort
+	private int port;
+
+
 	@Test
 	public void contextLoads() {
 		// Check that the Spring context loads successfully
-		assert(springBootAppApplication != null);
-
+		assertThat(springBootAppApplication).isNotNull();
 	}
 
 	@Test
 	public void homeEndpointReturnsHello() {
-		String url = "http://localhost:" + 8080 + "/";
+		String url = "http://localhost:" + port + "/";
 		String response = restTemplate.getForObject(url, String.class);
 		assertThat(response).contains("Authentication required");
 	}
