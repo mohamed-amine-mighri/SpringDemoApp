@@ -4,6 +4,12 @@ pipeline {
     tools {
         maven 'Maven'
     }
+    environment {
+        KUBECONFIG = credentials('finleKuberConfig')
+        APP_NAME = 'springapp'
+        IMAGE_NAME = 'aminemighri/demo-java-ops:2.0'
+        NAMESPACE = 'default'
+    }
 
     stages {
         stage("build jar") {
@@ -56,34 +62,18 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                kubernetesDeploy {
-                    // Provide the Kubernetes service account credentials
-                    serviceAccountCredentialsId 'finleKuberConfig	'
-
-                    // Specify the Kubernetes pod template
-                    podTemplate {
-                        apiVersion 'v1'
-                        kind 'Pod'
-                        metadata {
-                            name 'my-app'
-                            labels {
-                                app 'my-app'
-                            }
-                        }
-                        spec {
-                            containers {
-                                container {
-                                    name 'my-app-container'
-                                    image 'aminemighri/demo-java-ops:2.0'
-                                    ports {
-                                        containerPort 8080
-                                    }
-                                }
-                            }
-                        }
+                script {
+                    // Configure kubectl with the provided kubeconfig
+                    withKubeConfig([credentialsId: 'your-kubeconfig-credential-id']) {
+                        // Deploy the Java Spring app
+                        sh """
+                            kubectl apply -f deployment.yaml -n $NAMESPACE
+                            kubectl apply -f service.yaml -n $NAMESPACE
+                        """
                     }
                 }
             }
+    
         }
     }
 }
