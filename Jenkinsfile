@@ -54,10 +54,34 @@ pipeline {
         }
 
 
-         stage('Deploying App to Kubernetes') {
+        stage('Deploy to Kubernetes') {
             steps {
-                script {
-                    kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "finleKuberConfig")
+                kubernetesDeploy {
+                    // Provide the Kubernetes service account credentials
+                    serviceAccountCredentialsId 'finleKuberConfig	'
+
+                    // Specify the Kubernetes pod template
+                    podTemplate {
+                        apiVersion 'v1'
+                        kind 'Pod'
+                        metadata {
+                            name 'my-app'
+                            labels {
+                                app 'my-app'
+                            }
+                        }
+                        spec {
+                            containers {
+                                container {
+                                    name 'my-app-container'
+                                    image 'aminemighri/demo-java-ops:2.0'
+                                    ports {
+                                        containerPort 8080
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
