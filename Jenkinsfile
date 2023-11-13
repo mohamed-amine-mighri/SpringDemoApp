@@ -53,7 +53,7 @@ pipeline {
             }
         }
 
-        stages {
+
             stage('Deploying App to Kubernetes') {
                steps {
                  script {
@@ -61,6 +61,5 @@ pipeline {
                  }
                }
             }
-        }  
     }
 }
