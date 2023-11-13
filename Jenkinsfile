@@ -53,13 +53,14 @@ pipeline {
             }
         }
 
-            stage('Deploying App to Kubernetes') {
-               steps {
-                 script {
-                   kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "finleKuberConfig")
-                 }
-               }
-            
+        stage('Deploying App to Kubernetes') {
+            steps {
+                script {
+                    def kubeconfigId = "finleKuberConfig"
+                    def configs = "deploymentservice.yml"
+                    kubernetesDeploy(configs: configs, kubeconfigId: kubeconfigId)
+                }
+            }
         } 
     }
 }
