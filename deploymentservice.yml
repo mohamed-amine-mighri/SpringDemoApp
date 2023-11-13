@@ -16,7 +16,7 @@ spec:
         app: springapp
     spec:
       containers:
-        - name: aminemighri/demo-java-ops:2.0
+        - name: demo-java-ops
           image: aminemighri/demo-java-ops:2.0
           ports:
             - containerPort: 8080  # Assuming your Spring app runs on port 8080
