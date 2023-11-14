@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                      echo 'deploying docker image...'
-                     withCredentials([usernamePassword(credentialsId: 'dokerhub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                     withCredentials([usernamePassword(credentialsId: 'dockerHubCred', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                          sh "echo $PASS | docker login -u $USER --password-stdin"
                          sh 'docker push aminemighri/demo-java-ops:2.0'
                   }
@@ -64,7 +64,7 @@ pipeline {
             steps {
                 script {
                     // Configure kubectl with the provided kubeconfig
-                    withKubeConfig([credentialsId: 'finleKuberConfig']) {
+                    withKubeConfig([credentialsId: 'KuberConf']) {
                         // Deploy the Java Spring app
                         sh """
                             minikube kubectl -- apply -f deploymentservice.yml
