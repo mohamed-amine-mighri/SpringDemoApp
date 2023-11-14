@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     echo 'building docker image...'
-                        sh 'sudo docker build -t aminemighri/demo-java-ops:2.0 .'
+                        sh 'sudo docker build -t aminemighri/demo-java-ops:2.2 .'
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
                      echo 'deploying docker image...'
                      withCredentials([usernamePassword(credentialsId: 'dockerHubCred', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                          sh "sudo echo $PASS | docker login -u $USER --password-stdin"
-                         sh 'sudo docker push aminemighri/demo-java-ops:2.0'
+                         sh 'sudo docker push aminemighri/demo-java-ops:2.2'
                   }
                 }
             }
