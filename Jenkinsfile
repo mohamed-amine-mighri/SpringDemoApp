@@ -35,8 +35,8 @@ pipeline {
                 script {
                      echo 'deploying docker image...'
                      withCredentials([usernamePassword(credentialsId: 'dockerHubCred', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                         sh "sudo echo $PASS | docker login -u $USER --password-stdin"
-                         sh 'sudo docker push aminemighri/demo-java-ops:2.2'
+                         sh 'docker build -t aminemighri/demo-java-ops:2.2 .'
+                         sh 'docker push aminemighri/demo-java-ops:2.2'
                   }
                 }
             }
