@@ -5,7 +5,7 @@ pipeline {
         maven 'Maven'
     }
     environment {
-        KUBECONFIG = credentials('finleKuberConfig')
+        KUBECONFIG = credentials('KuberConf')
         APP_NAME = 'springapp'
         IMAGE_NAME = 'aminemighri/demo-java-ops:2.0'
         NAMESPACE = 'deploymentservice.yml'
